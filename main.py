@@ -80,6 +80,7 @@ def PlantSeed():
     if pickedSeed == Entities.Tree:
         if (get_pos_y() + get_pos_x())%2==0:
             plant(Entities.Tree)
+            harvest_util.Water()
         else:
             plant(Entities.Bush)
         return
@@ -93,7 +94,6 @@ def PlantSeed():
         return
 
     plant(pickedSeed)
-    harvest_util.Water()
 
 
 def UpdateWorldGrid():

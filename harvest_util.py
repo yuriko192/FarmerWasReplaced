@@ -9,7 +9,7 @@ def Water():
     if get_entity_type() == None:
         return
 
-    if get_water() < 0.1:
+    if get_water() < 0.4:
         use_item(Items.Water, 1)
     pass
 

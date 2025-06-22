@@ -63,7 +63,22 @@ def MoveToStart():
         move(West)
 
 
+def sortColumn():
+    pass
+
+
+def sortRow():
+    pass
+
+
 def PlantGrid():
+    for i in range(GridSize):
+        sortColumn()
+        move(East)
+    for i in range(GridSize):
+        sortRow()
+        move(North)
+
     while True:
         if get_pos_y() == GridSize - 1:
             move(North)
@@ -72,10 +87,11 @@ def PlantGrid():
             if get_pos_x() == 0:
                 do_a_flip()
                 harvest_util.Harvest()
-                break
+                PrepareGrid()
         else:
             move(North)
 
+        # change to sorting and swapping
         currentCactus = cactusGrid[get_pos_y()][get_pos_x()]
         leftCactus = -1
         bottomCactus = -1
