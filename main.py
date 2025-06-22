@@ -1,8 +1,11 @@
-import cactus
 from __builtins__ import *
+
+import mazes
+import cactus
 import pumpkin
 import movement_util
 import harvest_util
+import global_util
 
 SIZE = "size"
 GRID = "grid"
@@ -14,7 +17,9 @@ plantables = [
     (Items.Wood, Grounds.Soil, Entities.Tree),
     (Items.Carrot, Grounds.Soil, Entities.Carrot),
     (Items.Pumpkin, Grounds.Soil, Entities.Pumpkin),
-    (Items.Cactus, Grounds.Soil, Entities.Cactus)
+    (Items.Cactus, Grounds.Soil, Entities.Cactus),
+    (Items.Weird_Substance, Grounds.Soil, Entities.Cactus),
+    (Items.Gold, Grounds.Soil, Entities.Bush),
 ]
 
 world = {
@@ -64,21 +69,37 @@ def GetNextPlantables():
 
     i = -1
     for item, groundType, seed in plantables:
+        numItems = num_items(item)
+        if item == Items.Weird_Substance:
+            numItems*=10
         i += 1
-        if num_items(item) < num_items(pickedItem):
+        if numItems < num_items(pickedItem):
+            if item == Items.Weird_Substance:
+                pickedItem = item
+                continue
             pickedI = i
             pickedItem, pickedGroundType, pickedSeed = item, groundType, seed
     return pickedI, pickedItem, pickedGroundType, pickedSeed
 
+
 def PlantSeed():
     pickedI, pickedItem, pickedGroundType, pickedSeed = GetNextPlantables()
+
+    if pickedItem == Items.Weird_Substance:
+        global_util.USE_FERTILIZER = True
+    else:
+        global_util.USE_FERTILIZER = False
+
+    if pickedItem == Items.Gold:
+        mazes.RunMaze()
+
     PrepareGround(pickedGroundType)
 
     if pickedSeed == None:
         return
 
     if pickedSeed == Entities.Tree:
-        if (get_pos_y() + get_pos_x())%2==0:
+        if (get_pos_y() + get_pos_x()) % 2 == 0:
             plant(Entities.Tree)
             harvest_util.Water()
         else:
@@ -94,6 +115,7 @@ def PlantSeed():
         return
 
     plant(pickedSeed)
+    global_util.useFertilizer()
 
 
 def UpdateWorldGrid():

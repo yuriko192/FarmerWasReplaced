@@ -1,10 +1,18 @@
 from __builtins__ import *
 
+USE_FERTILIZER = True
+
+def useFertilizer():
+    if USE_FERTILIZER:
+        use_item(Items.Fertilizer)
+
 def getWorldGrid():
     return worldGrid
 
+
 def getWorldSize():
     return worldSize
+
 
 def CreateWorldGrid():
     worldGrid = []
@@ -14,6 +22,7 @@ def CreateWorldGrid():
             innerWorldGrid.append(None)
         worldGrid.append(innerWorldGrid)
     return worldGrid
+
 
 worldSize = get_world_size()
 worldGrid = CreateWorldGrid()

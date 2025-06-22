@@ -3,6 +3,11 @@ from __builtins__ import *
 import movement_util
 import harvest_util
 
+
+# < West East >
+# ^ North
+# v South
+
 # 5
 # 4
 # 3
@@ -39,6 +44,7 @@ def PlantPumpkin():
         if get_ground_type() != pumpkinGroundType:
             till()
         plant(pumpkin)
+        global_util.useFertilizer()
         movement_util.Move()
 
 if __name__ == "__main__":

@@ -20,19 +20,10 @@ GridSize = global_util.getWorldSize()
 cactusGrid = global_util.CreateWorldGrid()
 
 
-def ClearGrid():
-    posy = get_pos_y()
-    posx = get_pos_x()
-    while True:
-        harvest_util.Harvest()
-        movement_util.Move()
-        if get_pos_y() == posy and get_pos_x() == posx:
-            break
+
 
 
 def PrepareGrid():
-    posy = get_pos_y()
-    posx = get_pos_x()
     cactusTotal = 0
     while True:
         movement_util.Move()
@@ -53,6 +44,7 @@ def PrepareGrid():
         if get_ground_type() != cactusGroundType:
             till()
         plant(cactus)
+        global_util.useFertilizer()
         cactusGrid[currPossY][currPossX] = measure()
 
 
