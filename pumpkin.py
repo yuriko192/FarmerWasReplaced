@@ -38,6 +38,7 @@ def PlantPumpkin():
         harvest_util.Harvest()
         if get_ground_type() != pumpkinGroundType:
             till()
+        plant(pumpkin)
         movement_util.Move()
 
 if __name__ == "__main__":

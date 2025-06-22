@@ -58,24 +58,6 @@ def PrepareGround(groundType):
         till()
 
 
-def CheckTreeSides():
-    y = world[PLAYER][Y]
-    x = world[PLAYER][X]
-    worldSize = world[SIZE]
-    worldGrid = world[GRID]
-
-    if y - 1 > 0 and worldGrid[y - 1][x] == Entities.Tree:
-        return False
-    if x - 1 > 0 and worldGrid[y][x - 1] == Entities.Tree:
-        return False
-    if y + 1 < worldSize and worldGrid[y + 1][x] == Entities.Tree:
-        return False
-    if x + 1 < worldSize and worldGrid[y][x + 1] == Entities.Tree:
-        return False
-
-    return True
-
-
 def GetNextPlantables():
     pickedItem, pickedGroundType, pickedSeed = (Items.Hay, Grounds.Grassland, None)
     pickedI = -1
@@ -96,7 +78,7 @@ def PlantSeed():
         return
 
     if pickedSeed == Entities.Tree:
-        if CheckTreeSides():
+        if (get_pos_y() + get_pos_x())%2==0:
             plant(Entities.Tree)
         else:
             plant(Entities.Bush)

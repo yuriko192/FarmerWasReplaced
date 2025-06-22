@@ -65,7 +65,6 @@ def MoveToStart():
 
 def PlantGrid():
     while True:
-        currentHeight = cactusGrid[get_pos_y()][get_pos_x()]
         if get_pos_y() == GridSize - 1:
             move(North)
             move(East)
@@ -74,19 +73,24 @@ def PlantGrid():
                 do_a_flip()
                 harvest_util.Harvest()
                 PrepareGrid()
-            else:
-                currentHeight = cactusGrid[get_pos_y()][get_pos_x() - 1]
         else:
             move(North)
 
-        previousHeight = currentHeight
-        currentHeight = cactusGrid[get_pos_y()][get_pos_x()]
-        while currentHeight < previousHeight:
+        currentCactus = cactusGrid[get_pos_y()][get_pos_x()]
+        leftCactus = -1
+        bottomCactus = -1
+
+        if get_pos_x() != 0:
+            leftCactus = cactusGrid[get_pos_y()][get_pos_x() - 1]
+
+        if get_pos_y() != 0:
+            bottomCactus = cactusGrid[get_pos_y() - 1][get_pos_x()]
+        while currentCactus < leftCactus or currentCactus < bottomCactus:
             harvest_util.Harvest()
             plant(cactus)
             measureResult = measure()
             cactusGrid[get_pos_y()][get_pos_x()] = measureResult
-            currentHeight = measureResult
+            currentCactus = measureResult
 
 
 def PlantCactus():
