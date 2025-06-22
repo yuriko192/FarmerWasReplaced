@@ -63,40 +63,41 @@ def MoveToStart():
         move(West)
 
 
-def PlantGrid():
-    while True:
-        if get_pos_y() == GridSize - 1:
-            move(North)
-            move(East)
+def sortColumn():
+    while get_pos_y() != 0:
+        move(South)
+    while get_pos_y() != GridSize - 1:
+        move(North)
+        while get_pos_y() > 0 and measure(South) > measure():
+            swap(South)
+            move(South)
 
-            if get_pos_x() == 0:
-                do_a_flip()
-                harvest_util.Harvest()
-                break
-        else:
-            move(North)
 
-        currentCactus = cactusGrid[get_pos_y()][get_pos_x()]
-        leftCactus = -1
-        bottomCactus = -1
+def sortRow():
+    while get_pos_x() != 0:
+        move(West)
+    while get_pos_x() != GridSize - 1:
+        move(East)
+        while get_pos_x() > 0 and measure(West) > measure():
+            swap(West)
+            move(West)
+    pass
 
-        if get_pos_x() != 0:
-            leftCactus = cactusGrid[get_pos_y()][get_pos_x() - 1]
 
-        if get_pos_y() != 0:
-            bottomCactus = cactusGrid[get_pos_y() - 1][get_pos_x()]
-        while currentCactus < leftCactus or currentCactus < bottomCactus:
-            harvest_util.Harvest()
-            plant(cactus)
-            measureResult = measure()
-            cactusGrid[get_pos_y()][get_pos_x()] = measureResult
-            currentCactus = measureResult
+def SortGrid():
+    for i in range(GridSize):
+        sortColumn()
+        move(East)
+    for i in range(GridSize):
+        sortRow()
+        move(North)
 
 
 def PlantCactus():
     PrepareGrid()
     MoveToStart()
-    PlantGrid()
+    SortGrid()
+    harvest_util.Harvest()
 
 
 if __name__ == '__main__':
