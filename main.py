@@ -92,6 +92,7 @@ def PlantSeed():
 
     if pickedItem == Items.Gold:
         mazes.RunMaze()
+        return
 
     PrepareGround(pickedGroundType)
 

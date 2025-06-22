@@ -33,7 +33,6 @@ def PlantMaze():
         movement_util.Move()
         if get_pos_y() == posy and get_pos_x() == posx:
             break
-    movement_util.MoveBackward()
     use_item(Items.Weird_Substance, GridSize * unlockLevel)
 
 
