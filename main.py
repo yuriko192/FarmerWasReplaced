@@ -3,7 +3,7 @@ from __builtins__ import *
 import mazes
 import cactus
 import pumpkin
-import basicDinosaur
+import dinosaur
 import movement_util
 import harvest_util
 import global_util
@@ -94,7 +94,7 @@ def PlantSeed():
         return
 
     if pickedItem == Items.Bone:
-        basicDinosaur.RunSnake()
+        dinosaur.RunSnake()
         return
 
     PrepareGround(pickedGroundType)

@@ -6,7 +6,7 @@ import harvest_util
 import global_util
 
 GridSize = global_util.getWorldSize()
-unlockLevel = 2  # num_unlocked(Unlocks.Mazes)
+unlockLevel = num_unlocked(Unlocks.Mazes)
 
 directions = [South, West, North, East]
 direction = 0
