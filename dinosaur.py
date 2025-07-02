@@ -16,7 +16,7 @@ import global_util
 # 0 1 2 3 4 5
 
 TailSize = 1
-WorldSize = global_util.getWorldSize()
+GridSize = global_util.getWorldSize()
 GridMovementPattern = None
 
 
@@ -85,13 +85,13 @@ def randomMove():
 def createMovementGrid():
     global GridMovementPattern
     GridMovementPattern = global_util.CreateWorldGrid()
-    for y in range(WorldSize):
-        for x in range(WorldSize):
+    for y in range(GridSize):
+        for x in range(GridSize):
             if y == 0:
                 GridMovementPattern[y][x]= West
                 continue
             if x%2 == 0:
-                if y == WorldSize-1:
+                if y == GridSize-1:
                     GridMovementPattern[y][x] = East
                     continue
                 GridMovementPattern[y][x]= North
@@ -100,21 +100,19 @@ def createMovementGrid():
                     GridMovementPattern[y][x] = East
                     continue
                 GridMovementPattern[y][x] = South
-    x = WorldSize - 1
-    for y in range(1,WorldSize):
+    x = GridSize - 1
+    for y in range(1,GridSize):
         GridMovementPattern[y][x] = South
     GridMovementPattern[0][0] = North
 
 def moveLoop(nextX, nextY):
     global GridMovementPattern
-    if GridMovementPattern == None:
-        createMovementGrid()
     posX, posY = global_util.GetPosition()
     while measure() == None:
         nextMove = GridMovementPattern[posY][posX]
-        if WorldSize%2==1:
+        if GridSize%2==1:
             # enable skip
-            if nextX == WorldSize-1 and posX == WorldSize-2 and posY == WorldSize-1:
+            if nextX == GridSize-1 and posX == GridSize-2 and posY == GridSize-1:
                 nextMove = East
 
 
@@ -132,6 +130,7 @@ def RunSnake():
     change_hat(Hats.Dinosaur_Hat)
     nextX, nextY = measure()
     TailSize = 1
+    createMovementGrid()
     while True:
         if not randomMove():
             break
