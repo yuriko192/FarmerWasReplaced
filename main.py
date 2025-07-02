@@ -74,9 +74,6 @@ def GetNextPlantables():
             numItems*=10
         i += 1
         if numItems < num_items(pickedItem):
-            if item == Items.Weird_Substance:
-                pickedItem = item
-                continue
             pickedI = i
             pickedItem, pickedGroundType, pickedSeed = item, groundType, seed
     return pickedI, pickedItem, pickedGroundType, pickedSeed

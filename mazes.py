@@ -24,15 +24,24 @@ turnDirection = 1
 # 1
 # 0 1 2 3 4 5
 
-def PlantMaze():
+isClearGrid = False
+
+
+def clearGrid():
     posy = get_pos_y()
     posx = get_pos_x()
     while True:
-        harvest_util.Harvest()
-        plant(Entities.Bush)
+        if get_entity_type() != Entities.Grass:
+            harvest_util.Harvest()
         movement_util.Move()
         if get_pos_y() == posy and get_pos_x() == posx:
             break
+
+
+def PlantMaze():
+    if isClearGrid:
+        clearGrid()
+    plant(Entities.Bush)
     use_item(Items.Weird_Substance, GridSize * unlockLevel)
 
 
