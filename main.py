@@ -3,6 +3,7 @@ from __builtins__ import *
 import mazes
 import cactus
 import pumpkin
+import basicDinosaur
 import movement_util
 import harvest_util
 import global_util
@@ -20,6 +21,7 @@ plantables = [
     (Items.Cactus, Grounds.Soil, Entities.Cactus),
     (Items.Weird_Substance, Grounds.Soil, Entities.Cactus),
     (Items.Gold, Grounds.Soil, Entities.Bush),
+    (Items.Bone, Grounds.Soil, Entities.Bush),
 ]
 
 world = {
@@ -89,6 +91,10 @@ def PlantSeed():
 
     if pickedItem == Items.Gold:
         mazes.RunMaze()
+        return
+
+    if pickedItem == Items.Bone:
+        basicDinosaur.RunSnake()
         return
 
     PrepareGround(pickedGroundType)

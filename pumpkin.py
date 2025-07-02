@@ -31,7 +31,7 @@ def PlantPumpkin():
             harvestablePumpkinTotal = 0
             continue
         if currentEntity == pumpkin:
-            if harvestablePumpkinTotal == (GridSize ** 2):
+            if harvestablePumpkinTotal == (GridSize ** 3):
                 harvest_util.Harvest()
                 break
             if can_harvest():
