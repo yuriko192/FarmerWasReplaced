@@ -3,7 +3,6 @@ from __builtins__ import *
 import movement_util
 import harvest_util
 
-
 # < West East >
 # ^ North
 # v South
@@ -19,6 +18,7 @@ pumpkinGroundType = Grounds.Soil
 pumpkin = Entities.Pumpkin
 GridSize = global_util.getWorldSize()
 
+
 def PlantPumpkin():
     harvestablePumpkinTotal = 0
     while True:
@@ -31,7 +31,7 @@ def PlantPumpkin():
             harvestablePumpkinTotal = 0
             continue
         if currentEntity == pumpkin:
-            if harvestablePumpkinTotal == (GridSize * 3):
+            if harvestablePumpkinTotal == (GridSize ** 2 * 2):
                 harvest_util.Harvest()
                 break
             if can_harvest():
@@ -44,8 +44,10 @@ def PlantPumpkin():
         if get_ground_type() != pumpkinGroundType:
             till()
         plant(pumpkin)
+        harvestablePumpkinTotal = 0
         global_util.useFertilizer()
         movement_util.Move()
+
 
 if __name__ == "__main__":
     while True:

@@ -17,13 +17,13 @@ def getWorldSize():
 
 
 def CreateWorldGrid():
-    worldGrid = []
+    newGrid = []
     for y in range(worldSize):
-        innerWorldGrid = []
+        innerGrid = []
         for x in range(worldSize):
-            innerWorldGrid.append(None)
-        worldGrid.append(innerWorldGrid)
-    return worldGrid
+            innerGrid.append(None)
+        newGrid.append(innerGrid)
+    return newGrid
 
 
 def GetPosition():
