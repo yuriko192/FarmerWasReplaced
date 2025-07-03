@@ -106,22 +106,22 @@ def createMovementGrid():
     GridMovementPattern[0][0] = North
 
 def moveLoop(nextX, nextY):
-    global GridMovementPattern
-    posX, posY = global_util.GetPosition()
     while measure() == None:
-        nextMove = GridMovementPattern[posY][posX]
-        if GridSize%2==1:
-            # enable skip
-            if nextX == GridSize-1 and posX == GridSize-2 and posY == GridSize-1:
-                nextMove = East
-
-
-        while not move(nextMove):
+        while not move(getNextLoopMove(nextX, nextY)):
             if not randomMove():
                 return False
-        posX, posY = global_util.GetPosition()
     return True
-                
+
+
+def getNextLoopMove(nextX, nextY):
+    global GridMovementPattern
+    posX, posY = global_util.GetPosition()
+    nextMove = GridMovementPattern[posY][posX]
+    if GridSize % 2 == 1:
+        # enable skip
+        if nextX == GridSize - 1 and posX == GridSize - 2 and posY == GridSize - 1:
+            nextMove = East
+    return nextMove
 
 
 def RunSnake():

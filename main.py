@@ -91,10 +91,12 @@ def PlantSeed():
 
     if pickedItem == Items.Gold:
         mazes.RunMaze()
+        global_util.LastItem = pickedItem
         return
 
     if pickedItem == Items.Bone:
         dinosaur.RunSnake()
+        global_util.LastItem = pickedItem
         return
 
     PrepareGround(pickedGroundType)
@@ -108,18 +110,22 @@ def PlantSeed():
             harvest_util.Water()
         else:
             plant(Entities.Bush)
+        global_util.LastItem = pickedItem
         return
 
     if pickedSeed == Entities.Pumpkin:
         pumpkin.PlantPumpkin()
+        global_util.LastItem = pickedItem
         return
 
     if pickedSeed == Entities.Cactus:
         cactus.PlantCactus()
+        global_util.LastItem = pickedItem
         return
 
     plant(pickedSeed)
     global_util.useFertilizer()
+    global_util.LastItem = pickedItem
 
 
 def UpdateWorldGrid():

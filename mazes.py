@@ -24,8 +24,6 @@ turnDirection = 1
 # 1
 # 0 1 2 3 4 5
 
-isClearGrid = False
-
 
 def clearGrid():
     posy = get_pos_y()
@@ -39,7 +37,7 @@ def clearGrid():
 
 
 def PlantMaze():
-    if isClearGrid:
+    if global_util.LastItem != Items.Gold:
         clearGrid()
     plant(Entities.Bush)
     use_item(Items.Weird_Substance, GridSize * unlockLevel)
@@ -58,8 +56,7 @@ def HugRightWallSolver():
 
 
 def RunMaze():
-    if get_entity_type() != Entities.Hedge:
-        PlantMaze()
+    PlantMaze()
     HugRightWallSolver()
     harvest_util.Harvest()
 

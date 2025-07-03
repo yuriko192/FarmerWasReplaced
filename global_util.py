@@ -32,3 +32,4 @@ def GetPosition():
 
 worldSize = get_world_size()
 worldGrid = CreateWorldGrid()
+LastItem = Items.Hay
