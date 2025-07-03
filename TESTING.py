@@ -10,7 +10,7 @@ GridSize = global_util.getWorldSize()
 directions = [South, West, North, East]
 direction = 0
 turnDirection = 1
-targetIteration = 30
+targetIteration = 299
 
 
 # < West East >
