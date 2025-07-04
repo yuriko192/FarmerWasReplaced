@@ -10,6 +10,7 @@ sunflowerGroundType = Grounds.Soil
 sunflower = Entities.Sunflower
 WorldGrid = global_util.CreateWorldGrid()
 WorldDict = dict()
+Target = global_util.TARGET
 
 
 # < West East >
@@ -88,6 +89,6 @@ def RunSunFlower():
 
 
 if __name__ == '__main__':
-    while num_items(Items.Power) < 10000:
+    while num_items(Items.Power) < Target:
         RunSunFlower()
     quick_print("Final Result : ", global_util.GetAllItemsTotal())

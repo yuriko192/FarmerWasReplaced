@@ -17,6 +17,7 @@ import global_util
 TailSize = 1
 GridSize = global_util.getWorldSize()
 GridMovementPattern = None
+Target = global_util.TARGET
 
 
 def harvestAndTill():
@@ -104,6 +105,7 @@ def createMovementGrid():
         GridMovementPattern[y][x] = South
     GridMovementPattern[0][0] = North
 
+
 def getNextLoopMove(nextX, nextY):
     global GridMovementPattern
     posX, posY = global_util.GetPosition()
@@ -127,7 +129,9 @@ def RunSnake():
         if result != None:
             nextX, nextY = result
             TailSize += 1
-        if TailSize > global_util.getWorldSize() * 2 and move(getNextLoopMove(nextX, nextY)):
+            if TailSize == GridSize ** 2:
+                break
+        if TailSize > GridSize * 2 and move(getNextLoopMove(nextX, nextY)):
             continue
             # if not moveLoop(nextX, nextY):
             #     break
@@ -144,6 +148,7 @@ def RunSnake():
 
 
 if __name__ == '__main__':
-    while True:
-        change_hat(Hats.Straw_Hat)
+    change_hat(Hats.Straw_Hat)
+    while num_items(Items.Bone) < Target:
         RunSnake()
+    quick_print("Final Result : ", global_util.GetAllItemsTotal())

@@ -17,9 +17,7 @@ cactusGroundType = Grounds.Soil
 cactus = Entities.Cactus
 GridSize = global_util.getWorldSize()
 cactusGrid = global_util.CreateWorldGrid()
-
-
-
+Target = global_util.TARGET
 
 
 def PrepareGrid():
@@ -92,5 +90,6 @@ def PlantCactus():
 
 
 if __name__ == '__main__':
-    while True:
+    while num_items(Items.Cactus) < Target:
         PlantCactus()
+    quick_print("Final Result : ", global_util.GetAllItemsTotal())

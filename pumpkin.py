@@ -16,6 +16,7 @@ import harvest_util
 pumpkinGroundType = Grounds.Soil
 pumpkin = Entities.Pumpkin
 GridSize = global_util.getWorldSize()
+Target = global_util.TARGET
 
 
 def PlantPumpkin():
@@ -49,5 +50,6 @@ def PlantPumpkin():
 
 
 if __name__ == "__main__":
-    while True:
+    while num_items(Items.Pumpkin) < Target:
         PlantPumpkin()
+    quick_print("Final Result : ", global_util.GetAllItemsTotal())

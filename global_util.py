@@ -1,7 +1,7 @@
 from __builtins__ import *
 
-USE_FERTILIZER = True
-
+USE_FERTILIZER = False
+TARGET = 1000000
 ITEM_LIST = [
     Items.Carrot,
     Items.Fertilizer,
@@ -16,11 +16,13 @@ ITEM_LIST = [
     Items.Bone
 ]
 
+
 def GetAllItemsTotal():
     result = {}
     for item in ITEM_LIST:
-        result[item] =num_items(item)
+        result[item] = num_items(item)
     return result
+
 
 def useFertilizer():
     if USE_FERTILIZER:
@@ -48,6 +50,7 @@ def CreateWorldGrid():
 def GetPosition():
     return get_pos_x(), get_pos_y()
 
+
 def Move():
     if get_pos_y() < 1:
         move(West)
@@ -73,10 +76,12 @@ def MoveTo(targetX, targetY):
             move(North)
             posY += 1
 
+
 def MoveBackward():
     if get_pos_y() == getWorldSize() - 1:
         move(East)
     move(North)
+
 
 def ClearGrid():
     posy = get_pos_y()
@@ -87,6 +92,7 @@ def ClearGrid():
         Move()
         if get_pos_y() == posy and get_pos_x() == posx:
             break
+
 
 worldSize = get_world_size()
 worldGrid = CreateWorldGrid()
