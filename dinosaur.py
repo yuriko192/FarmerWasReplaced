@@ -88,30 +88,22 @@ def createMovementGrid():
     for y in range(GridSize):
         for x in range(GridSize):
             if y == 0:
-                GridMovementPattern[y][x]= West
+                GridMovementPattern[y][x] = West
                 continue
-            if x%2 == 0:
-                if y == GridSize-1:
+            if x % 2 == 0:
+                if y == GridSize - 1:
                     GridMovementPattern[y][x] = East
                     continue
-                GridMovementPattern[y][x]= North
+                GridMovementPattern[y][x] = North
             else:
                 if y == 1:
                     GridMovementPattern[y][x] = East
                     continue
                 GridMovementPattern[y][x] = South
     x = GridSize - 1
-    for y in range(1,GridSize):
+    for y in range(1, GridSize):
         GridMovementPattern[y][x] = South
     GridMovementPattern[0][0] = North
-
-def moveLoop(nextX, nextY):
-    while measure() == None:
-        while not move(getNextLoopMove(nextX, nextY)):
-            if not randomMove():
-                return False
-    return True
-
 
 def getNextLoopMove(nextX, nextY):
     global GridMovementPattern
@@ -132,16 +124,22 @@ def RunSnake():
     TailSize = 1
     createMovementGrid()
     while True:
-        if not randomMove():
-            break
-        if TailSize > global_util.getWorldSize():
-            if not moveLoop(nextX, nextY):
-                break
-        elif not moveToTarget(nextX, nextY):
-            if not moveLoop(nextX, nextY):
-                break
-        nextX, nextY = measure()
-        TailSize += 1
+        result = measure()
+        if result != None:
+            nextX, nextY = result
+            TailSize += 1
+        if TailSize > global_util.getWorldSize() * 2 and move(getNextLoopMove(nextX, nextY)):
+            continue
+            # if not moveLoop(nextX, nextY):
+            #     break
+        if moveToTarget(nextX, nextY):
+            continue
+        if move(getNextLoopMove(nextX, nextY)):
+            continue
+        if randomMove():
+            continue
+        break
+
     change_hat(Hats.Straw_Hat)
     return
 

@@ -11,6 +11,7 @@ directions = [South, West, North, East]
 direction = 0
 turnDirection = 1
 targetIteration = 299
+withUpdatePos = True
 
 
 # < West East >
@@ -102,7 +103,7 @@ def getDirection(previousX, previousY, currX, currY):
     return South
 
 
-def moveToTarget(mazeGrid, targetX, targetY):
+def bfs(mazeGrid, targetX, targetY):
     startX, startY = global_util.GetPosition()
     if startX == targetX and startY == targetY:
         return
@@ -118,7 +119,7 @@ def moveToTarget(mazeGrid, targetX, targetY):
                 # quick_print("adding ", ((posY, posX), (nextY, nextX), distance))
                 reachableNode.append(((posY, posX), (nextY, nextX), distance))
             # else:
-                # quick_print("skipping ", ((posY, posX), (nextY, nextX), distance))
+            # quick_print("skipping ", ((posY, posX), (nextY, nextX), distance))
 
     currX, currY = startX, startY
     visitedGrid[currY][currX] = [(currY, currX), 0]
@@ -132,7 +133,7 @@ def moveToTarget(mazeGrid, targetX, targetY):
         # quick_print("reachableNode State", reachableNode)
         (currY, currX), (nextY, nextX), nodeDistance = reachableNode.pop(0)
         # quick_print("Possible From", (currY, currX), (nextY, nextX))
-        visitedGrid[nextY][nextX] = [(currY,currX), nodeDistance]
+        visitedGrid[nextY][nextX] = [(currY, currX), nodeDistance]
         # quick_print("Grid State ", visitedGrid)
         currDistance = nodeDistance
         currX, currY = nextX, nextY
@@ -147,15 +148,112 @@ def moveToTarget(mazeGrid, targetX, targetY):
     moves = []
     # quick_print("Checking From ", currY, currX)
     while not (currX == startX and currY == startY):
-        (previousY, previousX ), _ = visitedGrid[currY][currX]
+        (previousY, previousX), _ = visitedGrid[currY][currX]
         # quick_print("Moving From", previousY, previousX, "To", currY, currX)
         moves.append(getDirection(previousX, previousY, currX, currY))
         currX, currY = previousX, previousY
 
-
     quick_print("moves: ", moves)
     for moveDirection in moves[::-1]:
         move(moveDirection)
+
+
+def getDistance(targetX, targetY, nextX, nextY):
+    dx = nextX - targetX
+    dy = nextY - targetY
+    return (dx ** 2 + dy ** 2) ** 0.5
+
+
+def insertWithPriority(arr, newValue):
+    newWeight = newValue[2]
+    for i in range(len(arr)):
+        itemWeight = arr[i][2]
+        if newWeight < itemWeight:
+            arr.insert(i, newValue)
+            return
+    arr.append(newValue)
+    return
+
+
+def checkAdjacent(mazeGrid):
+    posX, posY = global_util.GetPosition()
+    possibleMoves = mazeGrid[posY][posX]
+    if len(possibleMoves)==4:
+        return
+    for dir in range(4):
+        if dir in possibleMoves:
+            continue
+        if move(directions[dir]):
+            possibleMoves.append(dir)
+            move(directions[dir-2])
+    pass
+
+
+def aStar(mazeGrid, targetX, targetY):
+    startX, startY = global_util.GetPosition()
+    if startX == targetX and startY == targetY:
+        return
+
+    visitedGrid = global_util.CreateWorldGrid()  # (visitedFrom, weight)
+    reachableNode = []  # (prevPos, nextPos, distance )
+    currDistance = 0
+
+    def AddPositionToReachableNode(posX, posY, distance):
+        for possibleDirection in mazeGrid[posY][posX]:
+            nextX, nextY = getNextNode(posX, posY, possibleDirection)  # Get Neighbour
+            nextDistance = getDistance(targetX, targetY, nextX, nextY)
+            newNode = ((posY, posX), (nextY, nextX), nextDistance)
+            if visitedGrid[nextY][nextX] != None:
+                quick_print("skipping ", newNode)
+                continue
+                # _, oldDistance = visitedGrid[nextY][nextX]
+                # if nextDistance > oldDistance:
+                #     continue
+            quick_print("adding ", newNode)
+            insertWithPriority(reachableNode, newNode)
+            # else:
+
+    currX, currY = startX, startY
+    visitedGrid[currY][currX] = [(currY, currX), getDistance(targetX, targetY, currX, currY)]
+    AddPositionToReachableNode(startX, startY, currDistance + 1)
+
+    # Find Target
+    quick_print("starting ", startY, startX)
+    while len(reachableNode) > 0:
+        # Update Position
+        quick_print("")
+        quick_print("reachableNode State", reachableNode)
+        (currY, currX), (nextY, nextX), nodeDistance = reachableNode.pop(0)
+        quick_print("Possible From", (currY, currX), (nextY, nextX))
+        visitedGrid[nextY][nextX] = [(currY, currX), nodeDistance]
+        quick_print("Grid State ", visitedGrid)
+        currDistance = nodeDistance
+        currX, currY = nextX, nextY
+
+        # Found
+        if currX == targetX and currY == targetY:
+            break
+
+        AddPositionToReachableNode(currX, currY, currDistance + 1)
+
+    # Backtrace
+    moves = []
+    quick_print("Checking From ", currY, currX)
+    while not (currX == startX and currY == startY):
+        (previousY, previousX), _ = visitedGrid[currY][currX]
+        quick_print("Moving From", previousY, previousX, "To", currY, currX)
+        moves.append(getDirection(previousX, previousY, currX, currY))
+        currX, currY = previousX, previousY
+
+    quick_print("moves: ", moves)
+    for moveDirection in moves[::-1]:
+        if withUpdatePos:
+            checkAdjacent(mazeGrid)
+        move(moveDirection)
+
+
+def moveToTarget(mazeGrid, targetX, targetY):
+    aStar(mazeGrid, targetX, targetY)
     pass
 
 
@@ -192,7 +290,13 @@ def SmartSolver():
     quick_print(grid)
     for i in range(targetIteration):
         moveToTarget(grid, targetX, targetY)
-        nextX, nextY = measure()
+        result = measure()
+        if result == None:
+            while True:
+                print("CRASHED")
+                do_a_flip()
+            break
+        nextX, nextY = result
         targetX, targetY = nextX, nextY
         UseWeirdSubstance()
     moveToTarget(grid, targetX, targetY)
@@ -206,5 +310,5 @@ def RunMaze():
 
 
 if __name__ == '__main__':
-    # RunMaze()
     harvest()
+    RunMaze()

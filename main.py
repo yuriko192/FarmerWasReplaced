@@ -16,12 +16,12 @@ Y = "y"
 
 plantables = [
     (Items.Wood, Grounds.Soil, Entities.Tree),
-    (Items.Carrot, Grounds.Soil, Entities.Carrot),
-    (Items.Pumpkin, Grounds.Soil, Entities.Pumpkin),
-    (Items.Cactus, Grounds.Soil, Entities.Cactus),
-    (Items.Weird_Substance, Grounds.Soil, Entities.Cactus),
-    (Items.Gold, Grounds.Soil, Entities.Bush),
-    (Items.Bone, Grounds.Soil, Entities.Bush),
+    # (Items.Carrot, Grounds.Soil, Entities.Carrot),
+    # (Items.Pumpkin, Grounds.Soil, Entities.Pumpkin),
+    # (Items.Cactus, Grounds.Soil, Entities.Cactus),
+    # (Items.Weird_Substance, Grounds.Soil, Entities.Cactus),
+    # (Items.Gold, Grounds.Soil, Entities.Bush),
+    # (Items.Bone, Grounds.Soil, Entities.Bush),
 ]
 
 world = {
