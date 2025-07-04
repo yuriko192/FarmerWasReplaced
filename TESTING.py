@@ -1,7 +1,6 @@
 from __builtins__ import *
 import cactus
 import pumpkin
-import movement_util
 import harvest_util
 import global_util
 
@@ -28,21 +27,9 @@ withUpdatePos = True
 def UseWeirdSubstance():
     use_item(Items.Weird_Substance, GridSize * num_unlocked(Unlocks.Mazes))
 
-
-def clearGrid():
-    posy = get_pos_y()
-    posx = get_pos_x()
-    while True:
-        if get_entity_type() != Entities.Grass:
-            harvest_util.Harvest()
-        movement_util.Move()
-        if get_pos_y() == posy and get_pos_x() == posx:
-            break
-
-
 def PlantMaze():
     if global_util.LastItem == Items.Wood or global_util.LastItem == Items.Carrot:
-        clearGrid()
+        global_util.ClearGrid()
     plant(Entities.Bush)
     UseWeirdSubstance()
 

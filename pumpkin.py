@@ -1,6 +1,5 @@
 import global_util
 from __builtins__ import *
-import movement_util
 import harvest_util
 
 # < West East >
@@ -27,7 +26,7 @@ def PlantPumpkin():
             if get_ground_type() != pumpkinGroundType:
                 till()
             plant(pumpkin)
-            movement_util.Move()
+            global_util.Move()
             harvestablePumpkinTotal = 0
             continue
         if currentEntity == pumpkin:
@@ -38,7 +37,7 @@ def PlantPumpkin():
                 harvestablePumpkinTotal += 1
             else:
                 harvest_util.Water()
-            movement_util.Move()
+            global_util.Move()
             continue
         harvest_util.Harvest()
         if get_ground_type() != pumpkinGroundType:
@@ -46,7 +45,7 @@ def PlantPumpkin():
         plant(pumpkin)
         harvestablePumpkinTotal = 0
         global_util.useFertilizer()
-        movement_util.Move()
+        global_util.Move()
 
 
 if __name__ == "__main__":

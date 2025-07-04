@@ -4,7 +4,6 @@ import mazes
 import cactus
 import pumpkin
 import dinosaur
-import movement_util
 import harvest_util
 import global_util
 
@@ -144,4 +143,4 @@ while True:
     harvest_util.Harvest()
     PlantSeed()
     UpdateWorldGrid()
-    movement_util.Move()
+    global_util.Move()

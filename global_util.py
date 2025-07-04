@@ -48,6 +48,26 @@ def CreateWorldGrid():
 def GetPosition():
     return get_pos_x(), get_pos_y()
 
+def Move():
+    if get_pos_y() < 1:
+        move(West)
+    move(South)
+
+
+def MoveBackward():
+    if get_pos_y() == getWorldSize() - 1:
+        move(East)
+    move(North)
+
+def ClearGrid():
+    posy = get_pos_y()
+    posx = get_pos_x()
+    while True:
+        if get_entity_type() != Entities.Grass:
+            harvest()
+        Move()
+        if get_pos_y() == posy and get_pos_x() == posx:
+            break
 
 worldSize = get_world_size()
 worldGrid = CreateWorldGrid()

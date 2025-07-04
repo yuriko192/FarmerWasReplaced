@@ -1,6 +1,5 @@
 import global_util
 from __builtins__ import *
-import movement_util
 import harvest_util
 
 # < West East >
@@ -26,7 +25,7 @@ cactusGrid = global_util.CreateWorldGrid()
 def PrepareGrid():
     cactusTotal = 0
     while True:
-        movement_util.Move()
+        global_util.Move()
         currPossY = get_pos_y()
         currPossX = get_pos_x()
         currentEntity = get_entity_type()

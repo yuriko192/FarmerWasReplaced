@@ -1,6 +1,5 @@
 from __builtins__ import *
 
-import movement_util
 import harvest_util
 import global_util
 
@@ -34,7 +33,7 @@ def clearGrid():
     posx = get_pos_x()
     while True:
         harvestAndTill()
-        movement_util.Move()
+        global_util.Move()
         if get_pos_y() == posy and get_pos_x() == posx:
             break
 

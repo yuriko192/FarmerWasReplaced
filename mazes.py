@@ -1,7 +1,6 @@
 from __builtins__ import *
 import cactus
 import pumpkin
-import movement_util
 import harvest_util
 import global_util
 
@@ -35,7 +34,7 @@ def clearGrid():
     while True:
         if get_entity_type() != Entities.Grass:
             harvest_util.Harvest()
-        movement_util.Move()
+        global_util.Move()
         if get_pos_y() == posy and get_pos_x() == posx:
             break
 
