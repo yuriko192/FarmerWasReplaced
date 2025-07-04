@@ -23,15 +23,8 @@ def PlantPumpkin():
     harvestablePumpkinTotal = 0
     while True:
         currentEntity = get_entity_type()
-        if currentEntity == None:
-            if get_ground_type() != pumpkinGroundType:
-                till()
-            plant(pumpkin)
-            global_util.Move()
-            harvestablePumpkinTotal = 0
-            continue
         if currentEntity == pumpkin:
-            if harvestablePumpkinTotal == (GridSize ** 2 * 2):
+            if harvestablePumpkinTotal == (GridSize ** 2):
                 harvest_util.Harvest()
                 break
             if can_harvest():
@@ -39,14 +32,15 @@ def PlantPumpkin():
             else:
                 harvest_util.Water()
             global_util.Move()
-            continue
-        harvest_util.Harvest()
-        if get_ground_type() != pumpkinGroundType:
-            till()
-        plant(pumpkin)
-        harvestablePumpkinTotal = 0
-        global_util.useFertilizer()
-        global_util.Move()
+
+        else:
+            if currentEntity != None:
+                harvest()
+            if get_ground_type() != pumpkinGroundType:
+                till()
+            plant(pumpkin)
+            harvestablePumpkinTotal = 0
+            global_util.Move()
 
 
 if __name__ == "__main__":

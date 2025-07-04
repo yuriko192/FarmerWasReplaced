@@ -160,7 +160,7 @@ def bfs(mazeGrid, targetX, targetY):
 def getDistance(targetX, targetY, nextX, nextY):
     dx = nextX - targetX
     dy = nextY - targetY
-    return (dx ** 2 + dy ** 2) ** 0.5
+    return dx ** 2 + dy ** 2
 
 
 def insertWithPriority(arr, newValue):

@@ -8,41 +8,24 @@ import dinosaur
 import harvest_util
 import global_util
 
-SIZE = "size"
-GRID = "grid"
-PLAYER = "player"
-X = "x"
-Y = "y"
+PowerLimit = 100
 
 
 # DefaultPlant = (Items.Hay, Grounds.Grassland, None)
 DefaultPlant = (Items.Wood, Grounds.Soil, Entities.Tree)
 
 plantables = [
-    # (Items.Hay, Grounds.Grassland, None),
+    (Items.Hay, Grounds.Grassland, None),
     (Items.Power, Grounds.Soil, Entities.Sunflower),
     (Items.Wood, Grounds.Soil, Entities.Tree),
-    # (Items.Carrot, Grounds.Soil, Entities.Carrot),
-    # (Items.Pumpkin, Grounds.Soil, Entities.Pumpkin),
-    # (Items.Cactus, Grounds.Soil, Entities.Cactus),
-    # (Items.Weird_Substance, Grounds.Soil, Entities.Cactus),
-    # (Items.Gold, Grounds.Soil, Entities.Bush),
-    # (Items.Bone, Grounds.Soil, Entities.Bush),
+    (Items.Carrot, Grounds.Soil, Entities.Carrot),
+    (Items.Pumpkin, Grounds.Soil, Entities.Pumpkin),
+    (Items.Cactus, Grounds.Soil, Entities.Cactus),
+    (Items.Weird_Substance, Grounds.Soil, Entities.Cactus),
+    (Items.Gold, Grounds.Soil, Entities.Bush),
+    (Items.Bone, Grounds.Soil, Entities.Bush),
 ]
 
-world = {
-    SIZE: get_world_size(),
-    GRID: [],
-    PLAYER: {
-        X: 0,
-        Y: 0
-    },
-}
-for y in range(world[SIZE]):
-    innerWorldGrid = []
-    for x in range(world[SIZE]):
-        innerWorldGrid.append(None)
-    world[GRID].append(innerWorldGrid)
 
 
 def GetGroundType(item):
@@ -78,6 +61,9 @@ def GetNextPlantables():
     i = -1
     for item, groundType, seed in plantables:
         numItems = num_items(item)
+        if item == Items.Power:
+            if num_items(item) > PowerLimit:
+                continue
         if item == Items.Weird_Substance or item == Items.Power:
             numItems*=100
         i += 1
@@ -139,20 +125,10 @@ def PlantSeed():
     global_util.LastItem = pickedItem
 
 
-def UpdateWorldGrid():
-    y = world[PLAYER][Y]
-    x = world[PLAYER][X]
-    world[GRID][y][x] = get_entity_type()
 
-
-def UpdatePosition():
-    world[PLAYER][Y] = get_pos_y()
-    world[PLAYER][X] = get_pos_x()
 
 
 while True:
-    UpdatePosition()
     harvest_util.Harvest()
     PlantSeed()
-    UpdateWorldGrid()
     global_util.Move()
