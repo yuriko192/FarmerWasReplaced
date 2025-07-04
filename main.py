@@ -1,3 +1,4 @@
+import Sunflower
 from __builtins__ import *
 
 import mazes
@@ -13,14 +14,20 @@ PLAYER = "player"
 X = "x"
 Y = "y"
 
+
+# DefaultPlant = (Items.Hay, Grounds.Grassland, None)
+DefaultPlant = (Items.Wood, Grounds.Soil, Entities.Tree)
+
 plantables = [
+    # (Items.Hay, Grounds.Grassland, None),
+    (Items.Power, Grounds.Soil, Entities.Sunflower),
     (Items.Wood, Grounds.Soil, Entities.Tree),
-    (Items.Carrot, Grounds.Soil, Entities.Carrot),
-    (Items.Pumpkin, Grounds.Soil, Entities.Pumpkin),
-    (Items.Cactus, Grounds.Soil, Entities.Cactus),
-    (Items.Weird_Substance, Grounds.Soil, Entities.Cactus),
-    (Items.Gold, Grounds.Soil, Entities.Bush),
-    (Items.Bone, Grounds.Soil, Entities.Bush),
+    # (Items.Carrot, Grounds.Soil, Entities.Carrot),
+    # (Items.Pumpkin, Grounds.Soil, Entities.Pumpkin),
+    # (Items.Cactus, Grounds.Soil, Entities.Cactus),
+    # (Items.Weird_Substance, Grounds.Soil, Entities.Cactus),
+    # (Items.Gold, Grounds.Soil, Entities.Bush),
+    # (Items.Bone, Grounds.Soil, Entities.Bush),
 ]
 
 world = {
@@ -65,14 +72,14 @@ def PrepareGround(groundType):
 
 
 def GetNextPlantables():
-    pickedItem, pickedGroundType, pickedSeed = (Items.Hay, Grounds.Grassland, None)
+    pickedItem, pickedGroundType, pickedSeed = DefaultPlant
     pickedI = -1
 
     i = -1
     for item, groundType, seed in plantables:
         numItems = num_items(item)
-        if item == Items.Weird_Substance:
-            numItems*=10
+        if item == Items.Weird_Substance or item == Items.Power:
+            numItems*=100
         i += 1
         if numItems < num_items(pickedItem):
             pickedI = i
@@ -82,6 +89,11 @@ def GetNextPlantables():
 
 def PlantSeed():
     pickedI, pickedItem, pickedGroundType, pickedSeed = GetNextPlantables()
+
+    if pickedItem == Items.Power:
+        Sunflower.RunSunFlower()
+        global_util.LastItem = pickedItem
+        return
 
     if pickedItem == Items.Weird_Substance:
         global_util.USE_FERTILIZER = True

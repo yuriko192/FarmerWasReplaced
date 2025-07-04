@@ -54,6 +54,25 @@ def Move():
     move(South)
 
 
+def MoveTo(targetX, targetY):
+    posX, posY = GetPosition()
+    while not (posX == targetX and posY == targetY):
+        while posX > targetX:
+            move(West)
+            posX -= 1
+
+        while posX < targetX:
+            move(East)
+            posX += 1
+
+        while posY > targetY:
+            move(South)
+            posY -= 1
+
+        while posY < targetY:
+            move(North)
+            posY += 1
+
 def MoveBackward():
     if get_pos_y() == getWorldSize() - 1:
         move(East)

@@ -16,9 +16,11 @@ def Water():
 
 def Harvest():
     if get_entity_type()==Entities.Hedge:
-        return
+        return False
 
     if can_harvest():
         harvest()
+        return True
     else:
         Water()
+        return False
