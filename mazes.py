@@ -312,3 +312,4 @@ def RunMaze():
 if __name__ == '__main__':
     harvest()
     RunMaze()
+    quick_print("Final Result : ", global_util.GetAllItemsTotal())

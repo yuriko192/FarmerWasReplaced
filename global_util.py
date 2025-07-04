@@ -2,6 +2,25 @@ from __builtins__ import *
 
 USE_FERTILIZER = True
 
+ITEM_LIST = [
+    Items.Carrot,
+    Items.Fertilizer,
+    Items.Gold,
+    Items.Hay,
+    Items.Power,
+    Items.Pumpkin,
+    Items.Water,
+    Items.Weird_Substance,
+    Items.Wood,
+    Items.Cactus,
+    Items.Bone
+]
+
+def GetAllItemsTotal():
+    result = {}
+    for item in ITEM_LIST:
+        result[item] =num_items(item)
+    return result
 
 def useFertilizer():
     if USE_FERTILIZER:
